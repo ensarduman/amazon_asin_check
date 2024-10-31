@@ -13,7 +13,7 @@
 
 
 
-    
+
     setInterval(() => {
         const filledBar = document.querySelector('#filledBar');
         console.log('Yüzde: ' + filledBar.style.width);
@@ -34,19 +34,29 @@
 
     // Başlangıç zamanı
     const startTime = new Date();
+    var lastBarWidth = 100;
 
     setInterval(() => {
-        console.clear();
         
         // filledBar öğesini seçme
         const filledBar = document.querySelector('#filledBar');
 
-        var barWidth = filledBar.style.width.replace('%', '')
+        var barWidth = parseFloat(filledBar.style.width.replace('%', ''))
+
+        var difference = barWidth - lastBarWidth;
+
+        if (lastBarWidth == barWidth){
+            return;
+        }
+
+        lastBarWidth = barWidth;
+        
+        console.clear();
         
         // Yüzde ve genişlik oranı hesaplama
         console.log('Yüzde: ' + barWidth + "% ----- " + 
-                    (barWidth / 0.09182699999999999) + " / " + 
-                    (100 / 0.09182699999999999));
+            Math.round(barWidth / difference) + " / " + 
+            Math.round(100 / difference));
         
         // Şu anki zaman
         const currentTime = new Date();
@@ -62,7 +72,7 @@
         // Geçen süreyi yazdırma
         console.log(`Geçen süre: ${hours} saat, ${minutes} dakika, ${seconds} saniye`);
         
-    }, 2000); // Her 2000 milisaniyede (2 saniye) bir işlemi tekrar eder
+    }, 1000); // Her 2000 milisaniyede (2 saniye) bir işlemi tekrar eder
 
 
 
